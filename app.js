@@ -96,33 +96,63 @@ Call the server from the browser and your name would get printed.
 
 // server.listen(3000);
 
-//Express JS
-//deleted routes.js
-// use command npm install --save express
-const http =  require('http');
-//import express
-const express = require('express');
+// //Express JS
+// //deleted routes.js
+// // use command npm install --save express
+// const http =  require('http');
+// //import express
+// const express = require('express');
 
-//create express application
+// //create express application
+
+// const app = express();
+
+// //Middleware
+// //after creating app object and before creating server we add middleware
+// app.use((req,res,next)=> {
+//     console.log('I am inside middleware');
+//     next(); //allows the request to continue to the next middleware in line 
+// }); //the function inside will be used throughout the program
+// //next is a function which is used by express to connect with req of other function
+
+// app.use((req,res,next)=> {
+//     console.log('I am inside another middleware');
+//     //...here we will send response
+//     //we can still use res.write res.setHeader but express uses res.send
+//     res.send('<h1>Hello from Express.js!</h1>');
+// }); 
+
+// //the below two lines can be replaced with a single code
+// // const server = http.createServer(app);
+// // server.listen(3000);
+// app.listen(3000);
+
+//From video 7 to 10
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
-//Middleware
-//after creating app object and before creating server we add middleware
-app.use((req,res,next)=> {
-    console.log('I am inside middleware');
-    next(); //allows the request to continue to the next middleware in line 
-}); //the function inside will be used throughout the program
-//next is a function which is used by express to connect with req of other function
+//parsingbody use npm install --save body-parser
+app.use(bodyParser.urlencoded({extended:false}));
 
-app.use((req,res,next)=> {
-    console.log('I am inside another middleware');
-    //...here we will send response
-    //we can still use res.write res.setHeader but express uses res.send
-    res.send('<h1>Hello from Express.js!</h1>')
+
+//sharpener task
+/*Now add one more input tag in the add product page so that user can input size of the product.
+When the user clicks on submit parse both the input tags and show it in console.*/
+app.use('/add-product',(req,res,next)=> {
+    res.send('<form action="/product" method="POST">Product Name:<input type = "text" name="title">Size:<input type = "text" name="size"><button type="submit">Add product</button></form>');
 }); 
 
-//the below two lines can be replaced with a single code
-// const server = http.createServer(app);
-// server.listen(3000);
+app.post('/product',(req,res,next)=>{
+    console.log(req.body); // we have to parse else we get undefined
+    res.redirect('/');
+});
+
+
+app.use('/',(req,res,next)=> {
+    res.send('<h1>Hello from Express.js!</h1>');
+}); 
+
 app.listen(3000);
+
