@@ -127,32 +127,25 @@ Call the server from the browser and your name would get printed.
 // // server.listen(3000);
 // app.listen(3000);
 
-//From video 7 to 10
+//From video 11 to 13
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
 
+const adminRouters = require('./routes/admin');
+const shopRouters = require('./routes/shop');
+
 //parsingbody use npm install --save body-parser
 app.use(bodyParser.urlencoded({extended:false}));
 
+app.use('/admin',adminRouters);
 
-//sharpener task
-/*Now add one more input tag in the add product page so that user can input size of the product.
-When the user clicks on submit parse both the input tags and show it in console.*/
-app.use('/add-product',(req,res,next)=> {
-    res.send('<form action="/product" method="POST">Product Name:<input type = "text" name="title">Size:<input type = "text" name="size"><button type="submit">Add product</button></form>');
-}); 
+app.use('/shop',shopRouters);
 
-app.post('/product',(req,res,next)=>{
-    console.log(req.body); // we have to parse else we get undefined
-    res.redirect('/');
-});
-
-
-app.use('/',(req,res,next)=> {
-    res.send('<h1>Hello from Express.js!</h1>');
-}); 
+app.use((req,res,next)=>{
+    res.status(404).send('<h1>Page not found</h1>');
+})
 
 app.listen(3000);
 
