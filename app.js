@@ -86,12 +86,43 @@ Call the server from the browser and your name would get printed.
 // server.listen(3000);
 
 //2.
-const http = require('http');
+// const http = require('http');
 
-const routes = require('./routes');
+// const routes = require('./routes');
 
-console.log(routes.someText);
+// console.log(routes.someText);
 
-const server = http.createServer(routes.handler);
+// const server = http.createServer(routes.handler);
 
-server.listen(3000);
+// server.listen(3000);
+
+//Express JS
+//deleted routes.js
+// use command npm install --save express
+const http =  require('http');
+//import express
+const express = require('express');
+
+//create express application
+
+const app = express();
+
+//Middleware
+//after creating app object and before creating server we add middleware
+app.use((req,res,next)=> {
+    console.log('I am inside middleware');
+    next(); //allows the request to continue to the next middleware in line 
+}); //the function inside will be used throughout the program
+//next is a function which is used by express to connect with req of other function
+
+app.use((req,res,next)=> {
+    console.log('I am inside another middleware');
+    //...here we will send response
+    //we can still use res.write res.setHeader but express uses res.send
+    res.send('<h1>Hello from Express.js!</h1>')
+}); 
+
+//the below two lines can be replaced with a single code
+// const server = http.createServer(app);
+// server.listen(3000);
+app.listen(3000);
