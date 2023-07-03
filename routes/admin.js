@@ -1,16 +1,24 @@
+//adding path
+const path = require('path');
+
 const express = require('express');
+
+//adding own path using util folder
+const rootDir = require('../util/path');
 
 const router = express.Router();
 
 // /admin/add-product =>GET
 router.get('/add-product',(req,res,next)=> {
-    res.send('<form action="/admin/add-product" method="POST">Product Name:<input type = "text" name="title">Size:<input type = "text" name="size"><button type="submit">Add product</button></form>');
+    //res.sendFile(path.join(__dirname,'../','views','add-product.html')); //with /
+    //res.sendFile(path.join(__dirname,'..','views','add-product.html')); // without /
+    res.sendFile(path.join(rootDir,'views','add-product.html')); // using rootDir
 }); 
 
 // /admin/add-product =>POST
 router.post('/add-product',(req,res,next)=>{
     console.log(req.body); // we have to parse else we get undefined
-    res.redirect('/');
+    res.redirect('/success');
 });
 
 module.exports = router;
