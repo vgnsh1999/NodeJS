@@ -150,9 +150,49 @@ Call the server from the browser and your name would get printed.
 
 //From 14 to 22
 //adding path module
+// const path = require('path');
+
+// const express = require('express');
+
+// const bodyParser = require('body-parser');
+
+// const app = express();
+
+// const adminRouters = require('./routes/admin');
+// const shopRouters = require('./routes/shop');
+// const contactRouters = require('./routes/contact');
+
+// //parsingbody use npm install --save body-parser
+// app.use(bodyParser.urlencoded({extended:false}));
+
+// //to import statically express js provides a feature
+// app.use(express.static(path.join(__dirname,'public')));
+
+// app.use('/admin',adminRouters);
+
+// app.use('/shop',shopRouters);
+
+// app.use('/contactus',contactRouters);
+
+// app.use('/success',(req,res,next)=>{
+//     res.sendFile(path.join(__dirname,'views','success.html'))
+// });
+
+// app.use((req,res,next)=>{
+//     res.status(404).sendFile(path.join(__dirname,'views','404.html'))
+// });
+
+// app.listen(3000);
+
+//--------------------------------------------//
+
+// Adding controllers for /contactus and /success
 const path = require('path');
 
 const express = require('express');
+
+//adding controllers
+const successController = require('../Node JS/controllers/successcontrol');
 
 const bodyParser = require('body-parser');
 
@@ -174,13 +214,10 @@ app.use('/shop',shopRouters);
 
 app.use('/contactus',contactRouters);
 
-app.use('/success',(req,res,next)=>{
-    res.sendFile(path.join(__dirname,'views','success.html'))
-});
+app.use('/success',successController.getSuccess);
 
 app.use((req,res,next)=>{
     res.status(404).sendFile(path.join(__dirname,'views','404.html'))
 });
 
 app.listen(3000);
-
